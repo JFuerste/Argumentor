@@ -14,7 +14,7 @@ public class Argumentor {
 
     public void parseArguments(String[] args) {
         for (String arg : args) {
-            if (isMultipleBooleanFlagsArg(arg)) {
+            if (isMultipleBooleanFlagArg(arg)) {
                 setMultipleFlags(arg);
             } else if (arg.charAt(0) == '-' && arg.length() == 2){
                 setSingleFlag(arg);
@@ -26,7 +26,7 @@ public class Argumentor {
         
     }
 
-    private boolean isMultipleBooleanFlagsArg(String arg) {
+    private boolean isMultipleBooleanFlagArg(String arg) {
         return (arg.charAt(0) == '-') && (arg.length() > 2);
     }
 
