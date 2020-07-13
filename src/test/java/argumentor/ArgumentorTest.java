@@ -9,7 +9,7 @@ public class ArgumentorTest {
     @Test
     public void emptyBooleanTest(){
         Argumentor argumentor = getOneFlagArgumentor();
-        argumentor.parseArguments(new String[1]);
+        argumentor.parseArguments(new String[0]);
         boolean cArg = argumentor.getBooleanArgument("c");
         assertFalse(cArg);
     }

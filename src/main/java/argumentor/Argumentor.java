@@ -16,7 +16,7 @@ public class Argumentor {
         for (String arg : args) {
             if (isMultipleBooleanFlagArg(arg)) {
                 setMultipleFlags(arg);
-            } else if (arg.charAt(0) == '-' && arg.length() == 2){
+            } else if (arg != null && arg.charAt(0) == '-' && arg.length() == 2){
                 setSingleFlag(arg);
             }
         }
@@ -27,7 +27,7 @@ public class Argumentor {
     }
 
     private boolean isMultipleBooleanFlagArg(String arg) {
-        return (arg.charAt(0) == '-') && (arg.length() > 2);
+        return (arg != null && arg.charAt(0) == '-') && (arg.length() > 2);
     }
 
     private void setMultipleFlags(String arg) {
