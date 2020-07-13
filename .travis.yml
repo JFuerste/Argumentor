@@ -6,4 +6,4 @@ dist: trusty
 jdk: oraclejdk14
 
 script:
-  - ./gradlew build --scan -s
+  - chmod +x ./gradlew build --scan -s
