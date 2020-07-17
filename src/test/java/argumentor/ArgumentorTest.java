@@ -37,13 +37,17 @@ public class ArgumentorTest {
         boolean cArg = argumentor.getBooleanArgument("f");
     }
 
-    private String[] getSimpleBooleanArg() {
-        String[] args = new String[1];
-        args[0] = "-cb";
-        return args;
+    @Test(expected = ArgumentorException.class)
+    public void parseNonExistentFlag() {
+        Argumentor argumentor = new Argumentor();
+        argumentor.parseArguments(getSimpleBooleanArg());
     }
 
-
+    private String[] getSimpleBooleanArg() {
+        String[] args = new String[1];
+        args[0] = "-c";
+        return args;
+    }
 
 
 }
