@@ -1,5 +1,8 @@
 package argumentor;
 
+import argumentor.argwrappers.ArgWrapper;
+import argumentor.argwrappers.BooleanArgWrapper;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,10 +10,10 @@ import java.util.Map;
 
 public class Argumentor {
 
-    Map<String, Boolean> booleanFlags = new HashMap<>();
+    Map<String, ArgWrapper> argMap = new HashMap<>();
 
     void addBooleanArgument(String id, String... alternativeNames) {
-        booleanFlags.put(id, false);
+        argMap.put(id, new BooleanArgWrapper());
     }
 
 
@@ -35,8 +38,9 @@ public class Argumentor {
     }
 
     private void setBooleanArgIfExists(String arg) {
-        if (booleanFlags.containsKey(arg)) {
-            booleanFlags.put(arg, true);
+        if (argMap.containsKey(arg)) {
+            ArgWrapper boolArgWrapper = argMap.get(arg);
+            boolArgWrapper.setArgument(""); //Sets argument to true
         } else { // Arg is Shortflag, but not boolean
             throw new ArgumentorException("Unknown argument " + arg + " of type Boolean!",
                     ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
@@ -56,7 +60,8 @@ public class Argumentor {
 
     public boolean getBooleanArgument(String arg) throws ArgumentorException {
         try {
-            return booleanFlags.get(arg);
+            BooleanArgWrapper argWrapper = (BooleanArgWrapper) argMap.get(arg);
+            return argWrapper.getBooleanArg();
         } catch (Exception e) {
             throw new ArgumentorException("Unknown argument " + arg + " of type Boolean!",
                     ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
