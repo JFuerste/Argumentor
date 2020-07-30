@@ -2,6 +2,7 @@ package argumentor;
 
 import argumentor.argwrappers.ArgWrapper;
 import argumentor.argwrappers.BooleanArgWrapper;
+import argumentor.argwrappers.IntArgWrapper;
 import argumentor.argwrappers.StringArgWrapper;
 
 import java.util.*;
@@ -16,6 +17,10 @@ public class Argumentor {
 
     void addStringArgument(String id, String... alternativeNames) {
         argMap.put(id, new StringArgWrapper());
+    }
+
+    void addIntArgument(String id, String... alternativeNames) {
+        argMap.put(id, new IntArgWrapper());
     }
 
 
@@ -96,6 +101,17 @@ public class Argumentor {
             return argWrapper.getStringArg();
         } catch (Exception e) {
             throw new ArgumentorException("Unknown argument " + arg + " of type String!",
+                    ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
+                    arg);
+        }
+    }
+
+    public Optional<Integer> getIntegerArgument(String arg) {
+        try {
+            IntArgWrapper argWrapper = (IntArgWrapper) argMap.get(arg);
+            return argWrapper.getIntArgument();
+        } catch (Exception e) {
+            throw new ArgumentorException("Unknown argument " + arg + " of type Integer!",
                     ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
                     arg);
         }

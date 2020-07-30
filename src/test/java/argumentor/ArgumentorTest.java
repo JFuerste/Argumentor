@@ -103,5 +103,22 @@ public class ArgumentorTest {
 
     }
 
+    @Test
+    public void intArgument() {
+        Argumentor argumentor = new Argumentor();
+        argumentor.addIntArgument("size");
+        String[] args = new String[2];
+        args[0] = "--size";
+        args[1] = "10";
+
+        argumentor.parseArguments(args);
+
+        Optional<Integer> size = argumentor.getIntegerArgument("size");
+        assertTrue(size.isPresent());
+        assertEquals(Optional.of(10), size);
+
+
+    }
+
 
 }
