@@ -29,13 +29,36 @@ public class Argumentor {
                 for (String flag : splitFlags) {
                     setBooleanArgIfExists(flag);
                 }
-            } else if (isShortFlag(arg) && arg.length() == 2) {
-                arg = arg.substring(1); //Remove leading dash
-                setBooleanArgIfExists(arg);
-
+            } else {
+                arg = removeDashes(arg);
+                var argWrapper = argMap.get(arg);
+                if (argWrapper instanceof BooleanArgWrapper) {
+                    argWrapper.setArgument("");
+                } else if (iterator.hasNext()) {
+                    argWrapper.setArgument(iterator.next());
+                } else {
+                    throw new ArgumentorException("Used Non-Boolean Argument without value");
+                }
             }
         }
     }
+
+    private boolean isShortFlag(String arg) {
+        return arg != null && arg.charAt(0) == '-' && arg.charAt(1) != '-';
+    }
+
+    private String removeDashes(String arg) {
+        if (isShortFlag(arg)) {
+            //Remove leading dash
+            arg = arg.substring(1);
+        } else if (isLongFlag(arg)) {
+            arg = arg.substring(2);
+        } else {
+            throw new ArgumentorException("Could not parse argument " + arg);
+        }
+        return arg;
+    }
+
 
     private void setBooleanArgIfExists(String arg) {
         if (argMap.containsKey(arg)) {
@@ -48,13 +71,8 @@ public class Argumentor {
         }
     }
 
-    private boolean isShortFlag(String arg) {
-        return arg != null && arg.charAt(0) == '-';
-    }
-
-
-    private void setSingleFlag(String arg) {
-
+    private boolean isLongFlag(String arg) {
+        return arg != null && arg.charAt(0) == '-' && arg.charAt(1) == '-';
     }
 
 

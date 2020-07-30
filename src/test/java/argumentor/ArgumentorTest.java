@@ -43,9 +43,24 @@ public class ArgumentorTest {
         argumentor.parseArguments(getSimpleBooleanArg());
     }
 
+    @Test
+    public void verboseBooleanArg() {
+        Argumentor argumentor = new Argumentor();
+        argumentor.addBooleanArgument("verbose");
+        argumentor.parseArguments(getLongBooleanArg());
+        boolean verboseArg = argumentor.getBooleanArgument("verbose");
+        assertTrue(verboseArg);
+    }
+
     private String[] getSimpleBooleanArg() {
         String[] args = new String[1];
         args[0] = "-c";
+        return args;
+    }
+
+    private String[] getLongBooleanArg() {
+        String[] args = new String[1];
+        args[0] = "--verbose";
         return args;
     }
 

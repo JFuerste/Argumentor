@@ -1,8 +1,9 @@
 plugins {
     id 'java-library'
+    id 'maven'
 }
 
-group 'org.jcf'
+group 'com.jfuerste'
 version '0.1-SNAPSHOT'
 
 repositories {
