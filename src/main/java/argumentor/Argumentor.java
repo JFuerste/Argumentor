@@ -2,11 +2,9 @@ package argumentor;
 
 import argumentor.argwrappers.ArgWrapper;
 import argumentor.argwrappers.BooleanArgWrapper;
+import argumentor.argwrappers.StringArgWrapper;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class Argumentor {
 
@@ -14,6 +12,10 @@ public class Argumentor {
 
     void addBooleanArgument(String id, String... alternativeNames) {
         argMap.put(id, new BooleanArgWrapper());
+    }
+
+    void addStringArgument(String id, String... alternativeNames) {
+        argMap.put(id, new StringArgWrapper());
     }
 
 
@@ -60,6 +62,7 @@ public class Argumentor {
     }
 
 
+
     private void setBooleanArgIfExists(String arg) {
         if (argMap.containsKey(arg)) {
             ArgWrapper boolArgWrapper = argMap.get(arg);
@@ -82,6 +85,17 @@ public class Argumentor {
             return argWrapper.getBooleanArg();
         } catch (Exception e) {
             throw new ArgumentorException("Unknown argument " + arg + " of type Boolean!",
+                    ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
+                    arg);
+        }
+    }
+
+    public Optional<String> getStringArgument(String arg) {
+        try {
+            StringArgWrapper argWrapper = (StringArgWrapper) argMap.get(arg);
+            return argWrapper.getStringArg();
+        } catch (Exception e) {
+            throw new ArgumentorException("Unknown argument " + arg + " of type String!",
                     ArgumentorException.ErrorCode.UNKNOWN_BOOLEAN_ARG,
                     arg);
         }

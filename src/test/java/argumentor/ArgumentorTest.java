@@ -2,8 +2,9 @@ package argumentor;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 public class ArgumentorTest {
 
@@ -52,6 +53,23 @@ public class ArgumentorTest {
         assertTrue(verboseArg);
     }
 
+    @Test
+    public void stringArgument() {
+        Argumentor argumentor = new Argumentor();
+        argumentor.addStringArgument("argument");
+        argumentor.parseArguments(getStringArg());
+        Optional<String> strArg = argumentor.getStringArgument("argument");
+        assertTrue(strArg.isPresent());
+        assertEquals("param", strArg.get());
+    }
+
+    private String[] getStringArg() {
+        String[] args = new String[2];
+        args[0] = "--argument";
+        args[1] = "param";
+        return args;
+    }
+
     private String[] getSimpleBooleanArg() {
         String[] args = new String[1];
         args[0] = "-c";
@@ -62,6 +80,27 @@ public class ArgumentorTest {
         String[] args = new String[1];
         args[0] = "--verbose";
         return args;
+    }
+
+    @Test
+    public void multipleArguments() {
+        Argumentor argumentor = new Argumentor();
+        argumentor.addStringArgument("argument");
+        argumentor.addBooleanArgument("verbose");
+
+        String[] args = new String[3];
+        args[0] = "--verbose";
+        args[1] = "--argument";
+        args[2] = "param";
+
+        argumentor.parseArguments(args);
+
+        Optional<String> strArg = argumentor.getStringArgument("argument");
+        assertTrue(strArg.isPresent());
+        assertEquals(strArg.get(), "param");
+        boolean verboseArg = argumentor.getBooleanArgument("verbose");
+        assertTrue(verboseArg);
+
     }
 
 
