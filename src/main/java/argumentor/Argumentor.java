@@ -38,7 +38,7 @@ public class Argumentor {
                 }
             } else {
                 arg = removeDashes(arg);
-                var argWrapper = argMap.get(arg);
+                ArgWrapper argWrapper = argMap.get(arg);
                 if (argWrapper instanceof BooleanArgWrapper) {
                     argWrapper.setArgument("");
                 } else if (iterator.hasNext()) {
